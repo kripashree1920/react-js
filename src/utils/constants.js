@@ -3,3 +3,6 @@ export const REST_LOGO =
 
 export const APP_LOGO = 
 "https://www.logodesign.net/logo/smoking-burger-with-lettuce-3624ld.png?nwm=1&nws=1&industry=fast-food&sf=&txt_keyword=All"
+
+export const LIST_API =
+"https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.3408807&lng=74.7421427&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"

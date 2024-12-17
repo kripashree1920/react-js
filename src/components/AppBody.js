@@ -2,71 +2,79 @@ import RestCards from "./ReactCards";
 import { restLists } from "../utils/mockdata";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
-const AppBody = () => {
-  const [listOfRestuarants, setlistOfRestuarants] = useState([]);
-  const [filterOfRestuarants, setFilterOfRestuarants] = useState([]);
+import useOnlineStatus from "../utils/useOnlineStatus";
+import useListOfRestuarants from "../utils/useListOfRestuarants";
 
-  const [searchInput, setSearchInput] = useState("");
+const AppBody = () => {
+
+  const { listOfRestuarants, filterOfRestuarants } = useListOfRestuarants();
+  const [filteredRestaurants, setFilteredRestaurants] = useState(filterOfRestuarants);
+  const [restuarantList,setRestuarantList]= useState(listOfRestuarants);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (listOfRestuarants) {
+      setRestuarantList(listOfRestuarants); 
+    }
+  }, [listOfRestuarants]); 
 
-  const fetchData = async () => {
-    const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.3408807&lng=74.7421427&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-    );
-    const json = await data.json();
-    setlistOfRestuarants(
-      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
-    setFilterOfRestuarants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
-  };
+  useEffect(() => {
+    if (filterOfRestuarants) {
+      setFilteredRestaurants(filterOfRestuarants); 
+    }
+  }, [filterOfRestuarants]); 
 
-  return listOfRestuarants?.length === 0 ? (
+  const [searchInput, setSearchInput] = useState("");
+  const onlineStatus = useOnlineStatus();
+
+  if (!onlineStatus) {
+    return <h1>You are offline ! please check your internet connection :(</h1>;
+  }
+
+  return restuarantList?.length === 0 ? (
     <Shimmer />
   ) : (
     <div className="rest-container">
-      <div className="btn">
-        <div className="search-section">
+      <div className="m-4 flex">
+        <div className="m-4 p-4">
           <input
             type="text "
-            className="search-input"
+            className=" border border-solid border-red-800"
             value={searchInput}
             onChange={(e) => {
               setSearchInput(e?.target?.value);
             }}
           />
           <button
-            className="btn-ui"
+            className="ml-3 py-1 bg-red-800 text-white px-3 rounded-md"
             onClick={() => {
-              const filteredList = listOfRestuarants?.filter((data) => {
-                 return data?.info?.name
+              const filteredList = restuarantList?.filter((data) => {
+                return data?.info?.name
                   ?.toLowerCase()
                   ?.includes(searchInput?.toLowerCase());
-                });
-                setFilterOfRestuarants(filteredList);
-                
+              });
+              setFilteredRestaurants(filteredList);
             }}
           >
             Search
           </button>
         </div>
+        <div className="m-4 p-4 flex items-center">
         <button
-          className="top-rated-filter btn-ui"
+          className="bg-red-800 text-white px-4 py-1 rounded-md "
           onClick={() => {
-            const filteredList = listOfRestuarants.filter((res) => {
+            const filteredList = restuarantList.filter((res) => {
               return res?.info?.avgRating > 4.5;
             });
-            setlistOfRestuarants(filteredList);
+            setRestuarantList(filteredList);
           }}
         >
           Top Rated Restuarants
         </button>
+        </div>
       </div>
 
-      <div className="rest-lists">
-        {filterOfRestuarants?.map((restuarant) => (
+      <div className="flex flex-wrap ">
+        {filteredRestaurants?.map((restuarant) => (
           <RestCards key={restuarant?.info?.id} restData={restuarant} />
         ))}
       </div>
