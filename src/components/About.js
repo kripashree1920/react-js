@@ -31,7 +31,7 @@ class About extends React?.Component {
   }]
     return (
       <div>
-        <h1 className=" font-bold text-2xl p-4 m-4">About Us</h1>
+        <h1 className=" font-bold text-2xl p-4 m-4 text-center">About Us</h1>
 
         <div className=" w-[70%] m-auto">
           Swiggy is an Indian online food ordering and delivery company. Founded

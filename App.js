@@ -2,6 +2,7 @@ import React, { Suspense ,lazy} from "react";
 import ReactDOM from "react-dom/client"
 import Header from "./src/components/Header";
 import AppBody from "./src/components/AppBody";
+import Contact from "./src/components/Contact";
 // import About from "./src/components/About";
 import Error from "./src/components/Error";
 import { createBrowserRouter } from "react-router-dom";
@@ -32,6 +33,10 @@ const route = createBrowserRouter([
                 path:'/about',
                 element:<Suspense fallback={<h1>LOADING ......</h1>}> <About /></Suspense>
             },
+            {
+                path:"/contact-us",
+                element:<Contact />
+            }
         ],
         errorElement:<Error/>
 

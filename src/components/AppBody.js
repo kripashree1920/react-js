@@ -1,15 +1,20 @@
-import RestCards from "./ReactCards";
+import RestCards,{WithPromotedCard, WithPromotedCard} from "./ReactCards";
 import { restLists } from "../utils/mockdata";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import useListOfRestuarants from "../utils/useListOfRestuarants";
 
+
 const AppBody = () => {
 
   const { listOfRestuarants, filterOfRestuarants } = useListOfRestuarants();
   const [filteredRestaurants, setFilteredRestaurants] = useState(filterOfRestuarants);
   const [restuarantList,setRestuarantList]= useState(listOfRestuarants);
+
+  const PromotedCard = WithPromotedCard(restuarantList)
+
+console.log(restuarantList);
 
   useEffect(() => {
     if (listOfRestuarants) {
@@ -65,7 +70,10 @@ const AppBody = () => {
             const filteredList = restuarantList.filter((res) => {
               return res?.info?.avgRating > 4.5;
             });
-            setRestuarantList(filteredList);
+            console.log(filteredList);
+            
+            setFilteredRestaurants(filteredList);
+
           }}
         >
           Top Rated Restuarants
@@ -76,6 +84,10 @@ const AppBody = () => {
       <div className="flex flex-wrap ">
         {filteredRestaurants?.map((restuarant) => (
           <RestCards key={restuarant?.info?.id} restData={restuarant} />
+          
+          
+            // restuarant.data.promoted ? <PromotedCard   key={restuarant?.info?.id} restData={restuarant}/>:<RestCards  key={restuarant?.info?.id}  restData={restuarant}/>
+          
         ))}
       </div>
     </div>

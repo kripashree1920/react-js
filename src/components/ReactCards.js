@@ -19,4 +19,15 @@ const RestCards =(prop)=>{
 
 }
 
+export const WithPromotedCard = (restuarant)=>{
+    return(props)=>{
+        return (
+            <div>
+                <label htmlFor="">Promoted</label>
+                <RestCards {...props}/>
+            </div>
+        )
+    }
+}
+
 export default RestCards

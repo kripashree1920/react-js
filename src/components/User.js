@@ -19,7 +19,7 @@ class User extends React.Component {
           {roles.map((r, index) => {
             const { name, about } = r; 
             return (
-              <div key={index} className="w-[70%] m-auto my-4 border border-red-900 hover:bg-red-400 p-4 cursor-pointer shadow-md">
+              <div key={index} className="w-[70%] m-auto my-4 border border-red-900 hover:bg-yellow-600 p-4 cursor-pointer shadow-md">
                 <div className="about-user">
                   <h3 style={{ color: "#800000" }}>{name}: </h3>
                   <p>{about}</p>
