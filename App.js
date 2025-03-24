@@ -1,51 +1,97 @@
-import React, { Suspense ,lazy} from "react";
-import ReactDOM from "react-dom/client"
+import React, { lazy, Suspense, useEffect, useState } from "react";
+import ReactDOM from "react-dom/client";
 import Header from "./src/components/Header";
-import AppBody from "./src/components/AppBody";
-import Contact from "./src/components/Contact";
-// import About from "./src/components/About";
+import Body from "./src/components/Body"
+import Footer from "./src/components/Footer";
 import Error from "./src/components/Error";
-import { createBrowserRouter } from "react-router-dom";
-import { RouterProvider, createBrowserRouter, Outlet} from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import Contact from "./src/components/Contact";
+import RestaurantMenu from "./src/components/RestrauntMenu";
+import Profile from "./src/components/Profile";
+import Shimmer from "./src/components/Shimmer";
+import UserContext from "./src/utils/UserContext";
+import { Provider } from "react-redux";
+import store from "./src/utils/store";
+import Cart from "./src/components/Cart";
 
-const AppLayout =()=>{
-    return(
-        <div>
-            <Header/>
-            {/* <AppBody/> */}
-            <Outlet />
-        </div>
-    )
-}
+const Instamart = lazy(() => import("./src/components/Instamart"));
+const About = lazy(() => import("./src/components/About"));
+// Chunking
+// Code Splitting
+// Dynamic Bundling
+// Lazy Loading
+// On Demand Loading
+// Dynamic Import
 
-const About = lazy(()=> import( "./src/components/About"));
+const AppLayout = () => {
+  const [user, setUser] = useState({
+    name: "kripashree",
+    email: "kripashree.bhat@gmail",
+  });
 
-const route = createBrowserRouter([
-    {
-        path:"/",
-        element: <AppLayout />,
-        children:[
-            {
-                path:"/",
-                element:<AppBody />
-            },
-            {
-                path:'/about',
-                element:<Suspense fallback={<h1>LOADING ......</h1>}> <About /></Suspense>
-            },
-            {
-                path:"/contact-us",
-                element:<Contact />
-            }
+  return (
+    <Provider store={store}>
+      <UserContext.Provider
+        value={{
+          user: user,
+          setUser: setUser,
+        }}
+      >
+        <Header />
+        <Outlet />
+        <Footer />
+      </UserContext.Provider>
+    </Provider>
+  );
+};
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
+    errorElement: <Error />,
+    children: [
+      {
+        path: "/",
+        element: <Body />,
+      },
+      {
+        path: "/about", // parentPath/{path} => localhost:1244/about
+        element: (
+          <Suspense fallback={<h1>Loading....</h1>}>
+            <About />
+          </Suspense>
+        ),
+        children: [
+          {
+            path: "profile", // parentPath/{path} => localhost:1244/about/profile
+            element: <Profile />,
+          },
         ],
-        errorElement:<Error/>
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/restaurant/:resId",
+        element: <RestaurantMenu />,
+      },
+      {
+        path: "/instamart",
+        element: (
+          <Suspense fallback={<Shimmer />}>
+            <Instamart />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
+      },
+    ],
+  },
+]);
 
-    }
- 
-],
+const root = ReactDOM.createRoot(document.getElementById("root"));
 
-);
-
-
-const root = ReactDOM.createRoot(document.getElementById('root'))
-root.render(<RouterProvider router={route}/>)
+root.render(<RouterProvider router={appRouter} />);

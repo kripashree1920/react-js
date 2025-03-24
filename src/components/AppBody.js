@@ -1,4 +1,4 @@
-import RestCards,{WithPromotedCard, WithPromotedCard} from "./ReactCards";
+import RestCards,{WithPromotedCard} from "./ReactCards";
 import { restLists } from "../utils/mockdata";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
@@ -43,6 +43,7 @@ console.log(restuarantList);
         <div className="m-4 p-4">
           <input
             type="text "
+            data-testid="searchInput"
             className=" border border-solid border-red-800"
             value={searchInput}
             onChange={(e) => {
@@ -81,9 +82,9 @@ console.log(restuarantList);
         </div>
       </div>
 
-      <div className="flex flex-wrap ">
+      <div className="flex flex-wrap "  data-testid="restuarantCards">
         {filteredRestaurants?.map((restuarant) => (
-          <RestCards key={restuarant?.info?.id} restData={restuarant} />
+          <RestCards key={restuarant?.info?.id} restData={restuarant}/>
           
           
             // restuarant.data.promoted ? <PromotedCard   key={restuarant?.info?.id} restData={restuarant}/>:<RestCards  key={restuarant?.info?.id}  restData={restuarant}/>

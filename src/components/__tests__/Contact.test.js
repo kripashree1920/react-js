@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react"
 import Contact from "../Contact";
 import "@testing-library/jest-dom"
 
-describe("contact us test cases grouped",()=>{
+// describe("contact us test cases grouped",()=>{
 
 
 it("should Check if heading of contact us page is loaded",()=>{
@@ -48,4 +48,4 @@ test("should check 2 inputs loaded in contact component",()=>{
 
 })
 
-});
+// });

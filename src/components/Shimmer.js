@@ -1,18 +1,13 @@
-const Shimmer = () =>{
-    return(
-        <div className="flex flex-wrap">
-            <div className="m-4 p-4 w-[250px] bg-gray-400"> </div>
-            <div className="m-4 p-4 w-[250px] bg-gray-400"> </div>
-            <div className="m-4 p-4 w-[250px] bg-gray-400"> </div>
-            <div className="m-4 p-4 w-[250px] bg-gray-400"> </div>
-            <div className="m-4 p-4 w-[250px] bg-gray-400"> </div>
-            <div className="m-4 p-4 w-[250px] bg-gray-400"> </div>
-            <div className="m-4 p-4 w-[250px] bg-gray-400"> </div>
-            <div className="m-4 p-4 w-[250px] bg-gray-400"> </div>
-            <div className="m-4 p-4 w-[250px] bg-gray-400"> </div>
-            <div className="m-4 p-4 w-[250px] bg-gray-400"> </div>
-
-        </div>
-    )
-}
-export default Shimmer
+const Shimmer = () => {
+    return (
+      <div className="restaurant-list" data-testid="shimmer">
+        {Array(10)
+          .fill("")
+          .map((e, index) => (
+            <div key={index} className="shimmer-card"></div>
+          ))}
+      </div>
+    );
+  };
+  
+  export default Shimmer;
