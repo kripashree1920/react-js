@@ -23,28 +23,28 @@ const RestaurantMenu = () => {
   return !restaurant ? (
     <Shimmer />
   ) : (
-    <div className="flex">
-      <div>
+    <div className="flex justify-center mt-6 border border-red-900 w-[70%] m-auto" style={{backgroundColor:"#f0f0f0"}}>
+      <div className="p-5 ">
         <h1>Restraunt id: {resId}</h1>
         <h2>{restaurant?.name}</h2>
-        <img src={IMG_CDN_URL + restaurant?.cloudinaryImageId} />
+        <img className ="h-96"src={IMG_CDN_URL + restaurant?.cloudinaryImageId} />
         <h3>{restaurant?.area}</h3>
         <h3>{restaurant?.city}</h3>
         <h3>{restaurant?.avgRating} stars</h3>
         <h3>{restaurant?.costForTwoMsg}</h3>
       </div>
       <div className="p-5">
-        <h1>Menu</h1>
-        <ul data-testid="menu">
+        <h1 className="text-red-800 font-bold text-xl">Menu</h1>
+        <ul data-testid="menu" >
           {Object.values(rest?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card?.itemCards).map((item) => (
-            <li key={item.card.info?.id}>
+            <li key={item.card.info?.id} className="flex justify-between">
               {item?.card?.info?.name} -{" "}
               <button
                 data-testid="addBtn"
-                className="p-1 bg-green-50"
+                className="text-amber-800"
                 onClick={() => addFoodItem(item.card.info)}
               >
-                Add
+                +
               </button>
             </li>
           ))}

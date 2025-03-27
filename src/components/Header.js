@@ -1,15 +1,16 @@
 import { useState, useContext } from "react";
 // import Logo from "../assets/img/foodvilla.png";
-import { Link } from "react-router-dom";
+
 import useOnline from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
 import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+const Title = () => (
+  
+  
+    <img data-testid="logo" className="h-28 p-2 px-5" alt="logo" src="https://www.logodesign.net/logo/smoking-burger-with-lettuce-3624ld.png?nwm=1&nws=1&industry=fast-food&sf=&txt_keyword=All" />
 
-// const Title = () => (
-//   <a href="/">
-//     <img data-testid="logo" className="h-28 p-2" alt="logo" src={Logo} />
-//   </a>
-// );
+);
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -22,38 +23,80 @@ const Header = () => {
   console.log(cartItems);
 
   return (
-    <div className="flex justify-between bg-pink-50 shadow-lg sm:bg-blue-50 md:bg-yellow-50">
-      {/* <Title /> */}
-      <div className="nav-items">
-        <ul className="flex py-10">
-          <li className="px-2">
-            <Link to="/">Home</Link>
-          </li>
 
-          <Link to="/about">
-            <li className="px-2">About</li>
-          </Link>
-          <Link to="/contact">
-            <li className="px-2">Contact</li>
-          </Link>
-          <Link to="/instamart">
-            <li className="px-2">Instamart</li>
-          </Link>
-          <Link to="/cart">
-            <li className="px-2" data-testid="cart">
-              Cart- {cartItems.length} items
-            </li>
-          </Link>
-        </ul>
-      </div>
-      <h1 data-testid="online-status">{isOnline ? "✅" : "🔴"}</h1>
-      <span className="p-10 font-bold text-red-900">{user.name}</span>
+    <div className="flex justify-between shadow-lg text-amber-800">
+    <Title />
+    <div className="nav-items">
+      <ul className="flex py-10">
+        <li className="px-2">
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? "font-bold" : "")}
+          >
+            Home
+          </NavLink>
+        </li>
+  
+        <li className="px-2">
+          <NavLink
+            to="/about"
+            className={({ isActive }) => (isActive ? "font-bold" : "")}
+          >
+            About
+          </NavLink>
+        </li>
+  
+        <li className="px-2">
+          <NavLink
+            to="/contact"
+            className={({ isActive }) => (isActive ? "font-bold" : "")}
+          >
+            Contact
+          </NavLink>
+        </li>
+  
+        <li className="px-2">
+          <NavLink
+            to="/instamart"
+            className={({ isActive }) => (isActive ? "font-bold" : "")}
+          >
+            Instamart
+          </NavLink>
+        </li>
+  
+        <li className="px-2" data-testid="cart">
+          <NavLink
+            to="/cart"
+            className={({ isActive }) => (isActive ? "font-bold" : "")}
+          >
+            Cart - {cartItems.length} items
+          </NavLink>
+        </li>
+      </ul>
+    </div>
+  
+    <div data-testid="online-status" className="px-2 py-10">
+      Online status : {isOnline ? "✅" : "🔴"}
+    </div>
+  
+    <div className="flex justify-between px-20 py-10">
       {isLoggedIn ? (
-        <button onClick={() => setIsLoggedIn(false)}>Logout</button>
+        <button
+          className="bg-amber-800 text-white border border-amber-800 rounded-md px-5"
+          onClick={() => setIsLoggedIn(false)}
+        >
+          Logout
+        </button>
       ) : (
-        <button onClick={() => setIsLoggedIn(true)}>Login</button>
+        <button
+          className="bg-amber-800 text-white px-5 border border-amber-800 rounded-md"
+          onClick={() => setIsLoggedIn(true)}
+        >
+          Login
+        </button>
       )}
     </div>
+  </div>
   );
 };
 

@@ -7,7 +7,7 @@ const Contact = ()=>{
         <input type="text" placeholder="Name"  className="border border-black m-4 p-2"/>
         <input type="text" placeholder="Message" className="border border-black m-4 p-2" />
         <div >
-        <button className="border border-black bg-gray-400 p-4 m-4 ">Submit</button>
+        <button className="text-white bg-amber-800 p-4 m-4 rounded-md">Submit</button>
         </div>
       </form>
       </div>

@@ -41,29 +41,52 @@ const Body = () => {
   ) : (
     <>
       <div className="search-container p-5 bg-pink-50 my-5">
-        <input
-          data-testid="search-input"
-          type="text"
-          className="focus:bg-green-200 p-2 m-2"
-          placeholder="Search"
-          value={searchText}
-          onChange={(e) => {
-            setSearchText(e.target.value);
-          }}
-        />
+      
+        <div className="m-4 flex">
+        <div className="m-4 p-4">
+          <input
+            type="text "
+            data-testid="searchInput"
+            className=" border border-solid border-red-800 px-2"
+            value={searchText}
+            onChange={(e) => {
+              setSearchText(e?.target?.value);
+            }}
+          />
+          <button
+            className="ml-3 py-1 bg-red-800 text-white px-3 rounded-md"
+            onClick={() => {
+              const filteredList = allRestaurants?.filter((data) => {
+                return data?.info?.name
+                  ?.toLowerCase()
+                  ?.includes(searchText?.toLowerCase());
+              });
+              setFilteredRestaurants(filteredList);
+            }}
+          >
+            Search
+          </button>
+        </div>
+        <div className="m-4 p-4 flex items-center">
         <button
-          data-testid="search-btn"
-          className="p-2 m-2 bg-purple-900 hover:bg-gray-500 text-white rounded-md"
+          className="bg-red-800 text-white px-4 py-1 rounded-md "
           onClick={() => {
-            //need to filter the data
-            const data = filterData(searchText, allRestaurants);
-            // update the state - restaurants
-            setFilteredRestaurants(data);
+            const filteredList = allRestaurants.filter((res) => {
+              return res?.info?.avgRating > 4.5;
+            });
+            console.log(filteredList);
+            
+            setFilteredRestaurants(filteredList);
+
           }}
         >
-          Search
+          Top Rated Restuarants
         </button>
+        </div>
+
+        </div>
         <input
+        className="px-2"
           value={user.name}
           onChange={(e) =>
             setUser({
@@ -73,6 +96,7 @@ const Body = () => {
           }
         ></input>
         <input
+        className="mx-5 px-2"
           value={user.email}
           onChange={(e) =>
             setUser({

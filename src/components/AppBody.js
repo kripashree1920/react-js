@@ -32,7 +32,7 @@ console.log(restuarantList);
   const onlineStatus = useOnlineStatus();
 
   if (!onlineStatus) {
-    return <h1>You are offline ! please check your internet connection :(</h1>;
+    return <h1>You are offline ! please check your internet connection !!</h1>;
   }
 
   return restuarantList?.length === 0 ? (
